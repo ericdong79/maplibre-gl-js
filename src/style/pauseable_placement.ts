@@ -19,8 +19,12 @@ class LayerPlacement {
     _bucketParts: Array<BucketPart>;
 
     constructor(styleLayer: SymbolStyleLayer) {
-        this._sortAcrossTiles = styleLayer.layout.get('symbol-z-order') !== 'viewport-y' &&
+        if (styleLayer.layout) {
+            this._sortAcrossTiles = styleLayer.layout.get('symbol-z-order') !== 'viewport-y' &&
             !styleLayer.layout.get('symbol-sort-key').isConstant();
+        } else {
+            this._sortAcrossTiles = false;
+        }
 
         this._currentTileIndex = 0;
         this._currentPartIndex = 0;
